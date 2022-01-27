@@ -1,4 +1,4 @@
-import { ProductosManager } from "./productos.mjs";
+import { ProductosManager } from "./productos.js";
 import Express from "express";
 
 const PORT = 8080;
