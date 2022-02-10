@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafio 04</title>
+  
+</head>
+<body id="app">
+  <main>
+    <div style="width: 80%; margin-left: auto; margin-right: auto;">
+      <form id="newProdForm" method="post">
+        <fieldset style=" border: solid 1px gray;">
+          <legend>New Product</legend>
+          <label>Title</label>
+          <input type="text" name="title" id="title"/>
+          <br/>
+          <label>Price</label>
+          <input type="number" name="price" id="price" step="0.01" min="0.01" max="999"/>
+          <br/>
+          <label>Thumbnail url</label>
+          <input type="text" name="thumbnail" id="thumbnail" maxlength="200" size="100"/>
+          <br/>
+          <br/>
+          <button type="reset">Clear form</button>
+          <button type="submit" style="margin-left: 10px;">Save</button>
+        </fieldset>
+      </form>
+      <br/>
+      <br/>
+      <table style="width: 100%;">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Thumbnail</th>
+          </tr>
+        </thead>
+        <tbody id="productsTable">
+          <tr><td colspan="4">No products found</td></tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </main>
+  <script type="text/javascript" src="./index.js"></script>
+</body>
+</html>
