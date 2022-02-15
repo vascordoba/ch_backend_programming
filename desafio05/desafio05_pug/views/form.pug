@@ -1,0 +1,31 @@
+meta(charset="utf-8")
+meta(http-equiv="X-UA-Compatible", content="IE=edge")
+title Desafio 5
+meta(name="viewport", content="width=device-width,initial-scale=1")
+link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
+.container.fluid
+  .row
+    .col
+      h3 New product
+      form#newProdForm(method="post")
+        .form-group.row
+          label.col-sm-2.col-form-label(for="title") Title
+          .col-sm-4
+            input.form-control#title(type="text", placeholder="Title")
+        .form-group.row
+          label.col-sm-2.col-form-label(for="price") Price
+          .col-sm-2
+            input.form-control#price(type="number", placeholder="Price", step="0.01", min="0.01", max="999")
+        .form-group.row
+          label.col-sm-2.col-form-label(for="thumbnail") Thumbnail URL
+          .col-sm-10
+            input.form-control#thumbnail(type="text", placeholder="Thumbnail", size="100")
+        .form-group.row
+          .col-sm-10
+            button.btn.btn-secondary#cancelBtn(type="button") Cancel
+            button.btn.btn-warning(type="reset") Reset
+            button.btn.btn-primary(type="submit") Save
+      script(src="form.js")
+script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js", integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo", crossorigin="anonymous")
+script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js", integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1", crossorigin="anonymous")
+script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js", integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM", crossorigin="anonymous")
