@@ -3,13 +3,27 @@ let user;
 
 //registro helper para manejar los valores de los precios
 Handlebars.registerHelper("toFloat", (val) => parseFloat(val).toFixed(2));
+Handlebars.registerHelper("tsFormat", (val) =>
+  dayjs(val).format("DD/MM/YYYY hh:mm:ss")
+);
+
+const validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
 
 Swal.fire({
-  title: "User sign in",
+  title: "User email sign in",
   input: "text",
-  text: "Input ypur name",
+  text: "Input ypur email",
   inputValidator: (val) => {
-    return !val && "You need to identify yourself";
+    if (val.trim() === "") {
+      return "You need to identify youtself";
+    } else if (validateEmail(val) === null) {
+      return "You need to input a valid email";
+    }
+    return false;
   },
   allowOutsideClick: false,
 }).then((result) => {
@@ -84,6 +98,7 @@ const postMessage = (e) => {
   if (msg !== "") {
     let newMessage = {
       user,
+      ts: Date.now(),
       msg,
     };
     socket.emit("new-message", newMessage);

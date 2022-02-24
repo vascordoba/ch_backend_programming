@@ -19,7 +19,8 @@
     {{#if messages}}
     {{#each messages}}
     <tr>
-      <td>{{user}}: {{msg}}</td>
+      <td><b style="color:blue">{{user}}</b> <span style="color: brown; font-size:x-small">{{tsFormat
+          ts}}</span><br /><i style="color: green;">{{msg}}</i></td>
     </tr>
     {{/each}}
     {{else}}

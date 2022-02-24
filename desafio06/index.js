@@ -1,6 +1,7 @@
 import Express from "express";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
+import fs from "fs/promises";
 
 //fix for modules
 import path from "path";
@@ -9,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 let products = [];
-let messages = [];
+let messagesFilePath = "./messages.json";
 
 const PORT = process.env.PORT || 8080;
 const app = new Express();
@@ -52,8 +53,8 @@ const io = new Server(server);
 io.on("connection", (socket) => {
   console.log("Socket conectado");
 
-  socket.on("login", (data) => {
-    socket.emit("newUser", { products, messages });
+  socket.on("login", async (data) => {
+    socket.emit("newUser", { products, messages: await getMessages() });
   });
 
   socket.on("new-product", (data) => {
@@ -71,8 +72,44 @@ io.on("connection", (socket) => {
     io.sockets.emit("products", products);
   });
 
-  socket.on("new-message", (data) => {
-    messages.push(data);
-    io.sockets.emit("messages", messages);
+  socket.on("new-message", async (data) => {
+    await saveMessage(data);
+    io.sockets.emit("messages", await getMessages());
   });
 });
+
+const saveMessage = async (msg) => {
+  let messages = await _loadFile();
+  messages = [...messages, msg];
+  await _saveFile(messages);
+  return;
+};
+
+const getMessages = async () => {
+  try {
+    return await _loadFile();
+  } catch (error) {
+    console.log("ERROR: ", error);
+  }
+};
+
+const _saveFile = async (content) => {
+  try {
+    const data = await fs.writeFile(messagesFilePath, JSON.stringify(content));
+    return true;
+  } catch (error) {
+    console.log(
+      "Error saving file, please check write access to the containing folder"
+    );
+  }
+};
+
+const _loadFile = async () => {
+  try {
+    const data = await fs.readFile(messagesFilePath);
+    return JSON.parse(data);
+  } catch (error) {
+    console.log("File not found, creating a new one");
+    return [];
+  }
+};
