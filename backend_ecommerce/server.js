@@ -2,7 +2,7 @@ import Express from "express";
 
 import { Routes } from "./src/routes/routes.js";
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const app = new Express();
 
 app.use(Express.urlencoded({ extended: true }));
