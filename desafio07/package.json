@@ -1,0 +1,21 @@
+{
+  "name": "desafio06",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec node index.js"
+  },
+  "author": "vascordoba",
+  "license": "ISC",
+  "dependencies": {
+    "@vscode/sqlite3": "^5.0.7",
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
+    "knex": "^1.0.3",
+    "mysql2": "^2.3.3",
+    "socket.io": "^4.4.1"
+  }
+}

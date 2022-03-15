@@ -1,0 +1,26 @@
+<table class="table table-bordered table-striped table-sm">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Thumbnail</th>
+    </tr>
+  </thead>
+  <tbody id="productsTable">
+    {{#if products}}
+    {{#each products}}
+    <tr>
+      <td>{{id}}</td>
+      <td>{{title}}</td>
+      <td>${{toFloat price}}</td>
+      <td><img src="{{thumbnail}}" width="50" /></td>
+    </tr>
+    {{/each}}
+    {{else}}
+    <tr>
+      <td colspan="4">No products found</td>
+    </tr>
+    {{/if}}
+  </tbody>
+</table>
