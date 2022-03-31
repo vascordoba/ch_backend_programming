@@ -13,4 +13,17 @@ class ApiError extends Error {
   }
 }
 
-export { ApiError };
+class RepoError extends Error {
+  constructor(code, ...params) {
+    super(...params);
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, RepoError);
+    }
+
+    this.name = "RepoError";
+    this.code = code;
+  }
+}
+
+export { ApiError, RepoError };

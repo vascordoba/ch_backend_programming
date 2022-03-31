@@ -1,10 +1,15 @@
 import Express from "express";
 import { ApiError } from "../../commons/errors.js";
 import { validateUserRole } from "../security/securityMiddleware.js";
-import { ProductosManager } from "../../model/products/products.js";
+import { RepositoryFactory } from "../../repository/RepositoryFactory.js";
 import { validateProduct } from "./productsMiddleware.js";
 
-const productsService = new ProductosManager();
+const storage = process.env.STORAGE || "file";
+
+let productsService;
+(async () => {
+  productsService = await RepositoryFactory.getRepository("Product", storage);
+})();
 
 const ProductRoutes = new Express.Router();
 

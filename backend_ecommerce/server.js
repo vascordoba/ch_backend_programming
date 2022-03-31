@@ -1,9 +1,19 @@
+import "dotenv/config";
 import Express from "express";
 
 import { Routes } from "./src/routes/routes.js";
 
 const PORT = process.env.PORT || 8080;
 const app = new Express();
+const storage = process.env.STORAGE || "file";
+
+console.log(`Using ${storage} storage`);
+if (storage === "sqlite") {
+  (async () => {
+    const { sqliteSetup } = await import("./src/config/sqliteSetup.js");
+    await sqliteSetup();
+  })();
+}
 
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json());
@@ -23,11 +33,14 @@ app.delete("*", function (req, res) {
 });
 
 app.use(function (err, req, res, next) {
-  console.error(err.name, err.status, err.message);
-
+  console.error(err);
   res
-    .status(err.status)
-    .json({ error: err.code, route: err.path, description: err.message });
+    .status(err.status || 400)
+    .json({
+      error: err.code || -1,
+      route: err.path || "/",
+      description: err.message || "Runtime error",
+    });
 });
 
 const server = app.listen(PORT, () => {

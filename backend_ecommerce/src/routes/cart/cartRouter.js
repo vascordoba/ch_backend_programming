@@ -1,11 +1,16 @@
 import Express from "express";
 import { ApiError } from "../../commons/errors.js";
-import { CarritoManager } from "../../model/cart/cart.js";
-import { ProductosManager } from "../../model/products/products.js";
+import { RepositoryFactory } from "../../repository/RepositoryFactory.js";
 import { validateProductId } from "./cartMiddleware.js";
 
-const cartService = new CarritoManager();
-const productsService = new ProductosManager();
+const storage = process.env.STORAGE || "file";
+
+let cartService, productsService;
+
+(async () => {
+  cartService = await RepositoryFactory.getRepository("Cart", storage);
+  productsService = await RepositoryFactory.getRepository("Product", storage);
+})();
 
 const CartRoutes = new Express.Router();
 
@@ -14,10 +19,13 @@ CartRoutes.get("/:id/productos", async (req, res, next) => {
   try {
     if (req.params["id"] !== undefined) {
       const id = parseInt(req.params.id);
-      const cart = await cartService.getById(id);
+      let cart = await cartService.getById(id);
       if (cart === null) {
         throw new ApiError(404, -2, req.originalUrl, "Cart not found");
       } else {
+        if (Array.isArray(cart)) {
+          cart = cart[0];
+        }
         res.json(cart.products);
       }
     } else {
@@ -43,7 +51,10 @@ CartRoutes.post("/", async (req, res, next) => {
 CartRoutes.post("/:id/productos", validateProductId, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
-    const prod = await productsService.getById(req.body.id);
+    let prod = await productsService.getById(req.body.id);
+    if (Array.isArray(prod)) {
+      prod = prod[0];
+    }
     if (prod === null || prod === undefined) {
       throw new ApiError(404, -2, req.originalUrl, "Product not found");
     } else if (prod.stock === 0) {
