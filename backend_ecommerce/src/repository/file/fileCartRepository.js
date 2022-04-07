@@ -2,7 +2,7 @@ import { FileStorage } from "../FS.js";
 
 class FileCartRepository {
   constructor() {
-    this.storage = new FileStorage("cart/carrito.json");
+    this.storage = new FileStorage("../data/cart/carrito.json");
   }
 
   async save(cart) {

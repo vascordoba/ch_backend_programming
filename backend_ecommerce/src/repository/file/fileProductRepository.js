@@ -3,7 +3,7 @@ import { FileStorage } from "../FS.js";
 
 class FileProductRepository {
   constructor() {
-    this.storage = new FileStorage("products/productos.json");
+    this.storage = new FileStorage("../data/products/productos.json");
   }
 
   async save(product) {
