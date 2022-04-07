@@ -1,5 +1,5 @@
 import { ApiError } from "../../commons/errors.js";
-import { FileStorage } from "../../data/fileStorage.js";
+import { FileStorage } from "../FS.js";
 
 class FileProductRepository {
   constructor() {
